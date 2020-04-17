@@ -1,9 +1,19 @@
 var express = require("express");
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
+const cors = require('cors');
 const uri = "mongodb+srv://Tyree:xxxxxx@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority";
 var bodyParser = require('body-parser')
 
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+	next();
+});
+
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/signup', (req, res) =>{
