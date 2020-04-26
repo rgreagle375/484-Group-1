@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 import Master from './Master_Stream'
+import Viewer from './Viewer_Stream'
 
 class navbar extends React.Component {
   render() {
     return (
         <div>
             <Master />
+            <Viewer />
             <div class="flex-container">
                 <nav class="navbar">
                     <div class="brand-title">TU Connected</div>

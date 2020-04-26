@@ -116,6 +116,7 @@ export default async function startMaster(localView, streamerValues, onStatsRepo
       .getUserMedia(constraints)
       .then(stream => {
         localView.current.srcObject = stream;
+        master.localStream = stream;
       })
       .catch(console.log);
 
@@ -155,6 +156,8 @@ export default async function startMaster(localView, streamerValues, onStatsRepo
                 }
             }
         });
+
+        console.log("MASTER", master)
 
         master.localStream.getTracks().forEach(track => peerConnection.addTrack(track, master.localStream));
         await peerConnection.setRemoteDescription(offer);

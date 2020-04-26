@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import startMaster from './Master_Logic'
-import $ from 'jquery';
 export default class Master extends Component {
     constructor(props) {
       super(props);
@@ -26,9 +25,9 @@ export default class Master extends Component {
             useTrickleICE: true,
             natTraversalDisabled: false,
             forceTURN: false,
-            accessKeyId: "XXXXXXXXXXXXXXXXXXX",
+            accessKeyId: "",
             endpoint: null,
-            secretAccessKey: "XXXXXXXXXXXXXX",
+            secretAccessKey: "",
             sessionToken: null,
         }, ()=> {
             //TODO+}
@@ -57,6 +56,7 @@ export default class Master extends Component {
             ref={this.videoTag}
             autoPlay
             controls
+            muted
         />
         <button>Start Master</button>
         </div>
