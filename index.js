@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-const uri = "mongodb+srv://Tyree:Hello123@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Tyree:xxxx@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority";
 var bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 
@@ -83,8 +83,8 @@ app.post('/signup-prof', (req, res) =>{
         port: 465,
         secure: true,
         auth: {
-            user: 'engineeringblogster@gmail.com',
-            pass: 'Thisisit12!'
+            user: '<EMAIL>',
+            pass: '<PASSWORD>'
         }
     })
     let mailOptions = {
