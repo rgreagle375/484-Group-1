@@ -2,8 +2,9 @@ var express = require("express");
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-const uri = "mongodb+srv://Tyree:xxxxxx@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Tyree:Hello123@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority";
 var bodyParser = require('body-parser')
+const nodemailer = require('nodemailer')
 
 
 app.use(function(req, res, next) {
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/signup', (req, res) =>{
-    //When the user signs up, they will only give their username and passwords
+    //When the non-TU professor user signs up, they will only give their username and passwords
     //The rest of the fields will be empty by default
     const userEmail = req.body.email;
     const userPassword = req.body.password;
@@ -47,6 +48,58 @@ app.post('/signup', (req, res) =>{
     });
     res.status(200).send("Success");
 });
+
+app.post('/signup-prof', (req, res) =>{
+    //When the TU professor signs up, they will only give their username and passwords
+    //The rest of the fields will be empty by default
+    const userEmail = req.body.email;
+    const userPassword = req.body.password;
+    const newUsername = userEmail.substring(0, userEmail.indexOf("@"));
+    const user = {
+        username: newUsername,
+        email: userEmail,
+        password: userPassword,
+        SignallingChannel: "",
+        CurrentStreamDescription: "",
+        CurrentStreamTitle: "",
+        CurrentStreamKey: "",
+        PrevWatchedKeys: ""
+    };
+    MongoClient.connect(uri, (err, db) => {
+        var dbo = db.db("COSC484Users");
+        if(err) throw err;
+        dbo.collection("Professors").insertOne(user, (err, ans) => {
+            if (err) {
+                res.status("400").send(err);
+                console.err("Error has occured when adding to database");
+            } else {
+                console.log("Successfully inserted into database")
+            } 
+        })
+        db.close();
+    });
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'engineeringblogster@gmail.com',
+            pass: 'Thisisit12!'
+        }
+    })
+    let mailOptions = {
+        from: 'Tutor Team! <tutormailertowson@gmail.com>',
+        to: userEmail,
+        subject: 'Streamer capabilities notice',
+        text: `Hello there ${newUsername}, you will be recieving another email regarding 
+                your status for streaming.\n Please know that you can only have up to 10 members 
+                in each stream.\n As a professor, no action is needed by you to become a streamer  
+                as our team will update your profile in 24 hours at the most!`
+    }
+    transporter.sendMail(mailOptions)
+    res.status(200).send("Success");
+});
+
 
 app.get("/signin", (req, res) => {
    const { email, password } = req.body;
@@ -96,6 +149,10 @@ app.get("/get_stream", (req, res) => {
     }); 
 });
 
+app.get("/master-stream", (req, res) => {
+    console.log(req.body.masterProperties)
+})
+
 
 app.get("/watched_streams", (req, res) => {
     //This function will gather all of the streams that have been
@@ -121,11 +178,9 @@ app.get("/watched_streams", (req, res) => {
             }
         })
     })
-    
-
 })
 
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+app.listen(3001, () => {
+    console.log("Server running on port 3001");
 })
