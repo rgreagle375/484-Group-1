@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import startMaster from './Master_Logic'
 import $ from 'jquery';
-export default class Example extends Component {
+export default class Master extends Component {
     constructor(props) {
       super(props);
       this.videoTag = React.createRef()
@@ -26,9 +26,9 @@ export default class Example extends Component {
             useTrickleICE: true,
             natTraversalDisabled: false,
             forceTURN: false,
-            accessKeyId: "AKIAIQNU6UNUID7GVOAA",
+            accessKeyId: "XXXXXXXXXXXXXXXXXXX",
             endpoint: null,
-            secretAccessKey: "n5MdSgC0iCvBtWcn86Oqjjw5FgWluofDgrDSIaYy",
+            secretAccessKey: "XXXXXXXXXXXXXX",
             sessionToken: null,
         }, ()=> {
             //TODO+}

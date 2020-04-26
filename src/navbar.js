@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Example from './Master_Stream'
+import Master from './Master_Stream'
 
 class navbar extends React.Component {
   render() {
     return (
         <div>
-            <Example />
+            <Master />
             <div class="flex-container">
                 <nav class="navbar">
                     <div class="brand-title">TU Connected</div>
