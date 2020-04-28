@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!--Import Google Icon Font-->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <title>Materialize CSS</title>
+    <style>
+        .box{
+            height:800px;
+        }
+        .filler{
+            height:100px;
+        }
+        .align-header{
+            position: relative;
+            top: 20px;
+            left: 20px;
+        }
+        .no-color{
+            background: white;
+        }
+    
+        body{
+            background: darkgrey;
+            background-image: url('btowson.png');
+            background-repeat: repeat;
+        }
+        h4{
+            font-family: cursive;
+        }
+        .carousel .carousel-item{
+            width: 400px;
+        }
+       
+        p{
+            position: absolute;
+            font-size: 1.5em;
+            font-family: cursive;
+        }
+        .card-panel{
+            position: relative;
+            top: 20px;
+
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav-wrapper yellow darken-1 z-depth-3">
+    <!-- using container allows for margins and not left alignment -->
+    <div class="container">
+        <!-- large screen -->
+        <a href="#" class="brand-logo center hide-on-large-only">
+            <span class = "black-text"> Tu Connected </span>
+         <i class="material-icons black-text">book</i></a>
+         <!-- medium and small screens -->
+        <a href="#" class="brand-logo left hide-on-med-and-down">
+            <span class = "black-text"> Tu Connected </span>
+         <i class="material-icons black-text">book</i></a>
+        <!-- making mobile menu -->
+        <a href="#" class="sidenav-trigger" data-target="mobile-links">
+            <i class="material-icons black-text ">menu</i>
+        </a>
+        <!-- hide-on-med-and-down needed for mobile menu -->
+        <ul class = "hide-on-med-and-down right">
+            <li class><a href="#About" class = "black-text">Home</a></li>
+            <li><a href="#About" class = "black-text">About</a></li>
+            <li><a href="#Services" class = "black-text">Services</a></li>
+            <li><a href="#Tutors" class = "black-text">Tutors</a></li>
+            <li><a href="#Subjects" class = "black-text">Subjects</a></li>
+            <li><a href="#" class = "black-text">Login</a></li>
+
+            <li><a href="" class="black-text"><i class="material-icons black-text right"> person</i></a></li>
+        </ul>
+    </div>
+</nav>
+<!-- sidenav for class sidenav-trigger and mobile-links id for data-target-->
+<ul class="sidenav"id="mobile-links">
+    <li><a href="#"><i class="material-icons">person</i></a></li>
+    <li><a href="#About">Home</a></li>
+    <li><a href="#About">About</a></li>
+    <li><a href="#Services">Services</a></li>
+    <li><a href="#Tutors">Tutors</a></li>
+    <li><a href="#Subjects">Subjects</a></li>
+</ul>
+
+<div class="filler"></div>
+
+<div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="towson.png"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>Learn More Today/h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="towson2.png"> <!-- random image -->
+        <div class="caption left-align">
+          <h3>Make a Difference</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="towson3.jpg"> <!-- random image -->
+        <div class="caption right-align">
+          <h3>Our tutors care about their tutees</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="towson4.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="filler"></div>
+      
+
+    <div class="container no-color scrollspy" id = "About">
+        <div class=" box z-depth-4 ">
+            <h4 class ="align-header black-text"> 
+               About
+            </h4>
+            <div class="carousel ">
+                <a class="carousel-item" href="#one!"><img src="towson.jpg"></a>
+                <a class="carousel-item" href="#two!"><img src="towson2.png"></a>
+                <a class="carousel-item" href="#three!"><img src="towson3.jpg"></a>
+                <a class="carousel-item" href="#four!"><img src="towson4.jpg"></a>
+              </div>
+              <div class="container">
+
+                  <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum sint fugit consectetur pariatur ex nesciunt,
+                      fugiat voluptas harum molestias, temporibus dolorem cum ea blanditiis nobis tempore molestiae obcaecati soluta corporis quo, 
+                      itaque maiores! Ut itaque
+                      labore dolore adipisci nostrum facilis et, quas, mollitia quia culpa inventore consectetur assumenda sapiente quam.
+                  </p>
+              </div>
+           
+    </div>
+            
+ </div>
+    <div class="container filler">
+    
+    </div>
+    <div class="container no-color ">
+        <div class=" box z-depth-4 scrollspy" id = "Services">
+            <h4 class="align-header black-text">
+                Services
+            </h4>
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card-panel black">
+                        <i class="material-icons large yellow-text text-darken-1">
+                            book
+                        </i>
+                        <p class = "white-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                        </p>
+                    </div>
+    
+                </div>
+
+                    <div class="col s12 m4">
+                        <div class="card-panel black">
+                            <i class="material-icons large yellow-text text-darken-1">
+                                lightbulb
+                            </i>
+                                <p class = "white-text">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                                </p>
+                            </div>
+                        </div>
+    
+                
+                <div class="col s12 m4">
+                    <div class="card-panel black">
+                        <i class="material-icons large yellow-text text-darken-1">
+                            face
+                        </i>
+                        <p class = "white-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                        </p>
+        
+                    </div>
+    
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="container filler">
+    
+    </div>
+    <!-- <div class="container no-color">
+        <div class=" box z-depth-4 scrollspy" id = "Tutors">
+            <h4 class="align-header black-text">
+                Tutors
+            </h4>
+        </div>
+    </div>
+     -->
+    <div class="container filler">
+    
+    </div> 
+    <div class="container no-color">
+        <div class="box z-depth-4 scrollspy" id = "Subjects">
+            <h4 class="align-header black-text">
+                Subjects
+            </h4>
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card-panel black">
+                        <h4 class = "white-text">Calculus</h4>
+                        <i class="material-icons large yellow-text text-darken-1">
+                            book
+                        </i>
+                        <a href="#Algebra"class="btn indigo waves-effect waves-light">Go</a>
+                        <p class = "white-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                        </p>
+                    </div>
+    
+                </div>
+
+                    <div class="col s12 m4">
+                        <div class="card-panel black">
+                            <h4 class = "white-text">Algebra</h4>
+                            <i class="material-icons large yellow-text text-darken-1">
+                                book
+                            </i>
+                            <a href="#Algebra"class="btn indigo waves-effect waves-light">Go</a>
+                                <p class = "white-text">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                                </p>
+                            </div>
+                        </div>
+    
+                
+                <div class="col s12 m4">
+                    <div class="card-panel black">
+                        <h4 class = "white-text">Physics</h4>
+                        <i class="material-icons large yellow-text text-darken-1">
+                            book
+                        </i>
+                        <a href="#Algebra"class="btn indigo waves-effect waves-light">Go</a>
+                        <p class = "white-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
+                                    quidem nostrum doloremque sunt corrupti 
+                        </p>
+        
+                    </div>
+    
+                </div>
+                </div>
+        </div>
+    </div>
+    
+    <div class="container filler">
+    
+    </div>
+
+    <footer class="page-footer black">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">Footer Content</h5>
+              <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+              <h5 class="white-text">Links</h5>
+              <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+          © 2020 Copyright Text
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+          </div>
+        </div>
+      </footer>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ <script>
+     $(document).ready(function(){
+         $('.sidenav').sidenav();
+         $('.carousel').carousel();
+
+     })
+   
+ </script>
+ <script>
+     $(document).ready(function(){
+         $('.scrollspy').scrollSpy();
+     })
+   
+ </script>
+ <script>
+     $(document).ready(function(){
+         $('.slider').slider({
+             full_width: true,
+             height: 300
+         });
+     })
+   
+ </script>
+</body>
+</html>
+
+
