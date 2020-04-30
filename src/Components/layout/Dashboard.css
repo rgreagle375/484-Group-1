@@ -1,0 +1,39 @@
+
+.box{
+    height:800px;
+}
+.filler{
+    height:100px;
+}
+.align-header{
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+.no-color{
+    background: white;
+}
+
+body{
+    background: darkgrey;
+    background-image: url('./btowson.png');
+    background-repeat: repeat;
+}
+h4{
+    font-family: cursive;
+}
+.carousel .carousel-item{
+    width: 600px;
+}
+
+ p{
+    position: relative;
+    font-size: 1.5em;
+    font-family: cursive;
+} 
+.card-panel{
+    position: relative;
+    top: 20px;
+
+    height: 700px;
+}

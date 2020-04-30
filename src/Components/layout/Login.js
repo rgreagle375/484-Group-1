@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'materialize-css/dist/css/materialize.min.css'
 import './Login.css'
 class Login extends Component {
     state = {
@@ -18,14 +17,15 @@ class Login extends Component {
         console.log(this.state);
     }
 
-
+    // just add a signup button on the login component
     render() {
-    
         return (
-            <div className = "container" >
+            <div>
+                <h4 className = "white-text moveh"> Start Learning Today!!</h4>
+            <div className = "container move" >
                 <form onSubmit = {this.handleSubmit} className = "white">
                     
-                    <h5 className = "grey-text.text-darken-3"> Log In</h5>
+                    <h5 className = "grey-text text-darken-3"> Log In</h5>
                     <div className = "input-field">
                         <label htmlFor = "email">Email</label>
                         <input type="email" id="email" onChange = {this.handleChange}></input>
@@ -35,9 +35,10 @@ class Login extends Component {
                         <input type="password" id="password" onChange = {this.handleChange}></input>
                     </div>
                     <div className = "input-field">
-                        <button className = "btn pink lighten-1 z-depth-0">Login</button>
+                        <button className = "btn yellow darken-1 z-depth-0">Login</button>
                     </div>
                 </form>
+            </div>
             </div>
         );
     }

@@ -3,7 +3,7 @@ import React from 'react';
 const Algebra = () => {
     return (
         <div>
-            <h1>Algebra</h1>
+            <h1 className = "white-text">Algebra</h1>
         </div>
     );
 }
