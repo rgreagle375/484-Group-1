@@ -18,8 +18,6 @@ class App extends Component {
   
     return ( 
       <>
-        {console.log(process.env.REACT_APP_ACCESS_KEY)}
-        {console.log(process.env.REACT_APP_SECRET_ACCESS_KEY)}
         <BrowserRouter>
         <Navbar></Navbar>
         <PublicRoute path = {"/home"} component={Home}/>
