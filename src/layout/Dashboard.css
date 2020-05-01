@@ -1,4 +1,3 @@
-
 .box{
     height:800px;
 }
@@ -16,7 +15,7 @@
 
 body{
     background: darkgrey;
-    background-image: url('./btowson.png');
+    background-image: url('../photos/btowson.png');
     background-repeat: repeat;
 }
 h4{

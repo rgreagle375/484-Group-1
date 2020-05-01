@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import Navbar from './Components/layout/Navbar.js' 
+import Navbar from './Components/Navbar.js' 
 import { BrowserRouter, Route, Router, Redirect} from 'react-router-dom';
-import Home from './Components/layout/Home'
-import About from './Components/layout/About'
-import Login from './Components/layout/Login'
-import Physics from './Components/layout/Physics'
-import Algebra from './Components/layout/Algebra'
-import Calculus from './Components/layout/Calculus'
-import Services from './Components/layout/Services'
+import Home from './Components/Home'
+import About from './Components/About'
+import Login from './Components/Login'
+import Physics from './Components/Physics'
+import Algebra from './Components/Algebra'
+import Calculus from './Components/Calculus'
+import Services from './Components/Services'
 import PublicRoute from './navigation/PublicRoute'
 import PrivateRoute from './navigation/PrivateRoute'
-import Subjects from './Components/layout/Subjects'
+import Subjects from './Components/Subjects'
 
 class App extends Component {
  
@@ -18,25 +18,27 @@ class App extends Component {
   
     return ( 
       <>
-            <BrowserRouter>
-            <Navbar></Navbar>
-            <PublicRoute path = {"/home"} component={Home}/>
-            <PublicRoute path = {"/about"} component={About}/>
-            <PublicRoute path = {"/subjects"} component={Subjects}/>
-            <PublicRoute path = {"/calculus"} component={Calculus}/>
-            <PublicRoute path = {"/physics"} component={Physics}/>
-            <PublicRoute path = {"/algebra"} component={Algebra}/>
-            <PublicRoute path = {"/services"} component={Services}/>
-           <PublicRoute path = {"/login"} component={Login}/>
+        {console.log(process.env.REACT_APP_ACCESS_KEY)}
+        {console.log(process.env.REACT_APP_SECRET_ACCESS_KEY)}
+        <BrowserRouter>
+        <Navbar></Navbar>
+        <PublicRoute path = {"/home"} component={Home}/>
+        <PublicRoute path = {"/about"} component={About}/>
+        <PublicRoute path = {"/subjects"} component={Subjects}/>
+        <PublicRoute path = {"/calculus"} component={Calculus}/>
+        <PublicRoute path = {"/physics"} component={Physics}/>
+        <PublicRoute path = {"/algebra"} component={Algebra}/>
+        <PublicRoute path = {"/services"} component={Services}/>
+        <PublicRoute path = {"/login"} component={Login}/>
 
-            </BrowserRouter>
+        </BrowserRouter>
             
       </>
     
   
     );
 
-}
+  }
 }
 
 export default App;

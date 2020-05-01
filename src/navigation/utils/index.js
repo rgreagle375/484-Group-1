@@ -1,5 +1,3 @@
-
-
 const TOKEN_KEY = 'jwt';
 
 export const login = () => {

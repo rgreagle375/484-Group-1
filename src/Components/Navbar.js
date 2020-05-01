@@ -1,8 +1,8 @@
 import React, { Component} from 'react'
 import {Link} from "react-router-dom" 
-import SignedOutLinks from '../../navigation/SignedOutLinks'
-import SignedInLinks from '../../navigation/SignedInLinks'
-import { isLogin } from '../../navigation/utils/index.js';
+import SignedOutLinks from '../navigation/SignedOutLinks'
+import SignedInLinks from '../navigation/SignedInLinks'
+import { isLogin } from '../navigation/utils/index.js';
 import ReactDOM from 'react-dom'
 
 const Navbar = () => {
