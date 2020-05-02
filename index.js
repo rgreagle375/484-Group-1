@@ -2,9 +2,14 @@ var express = require("express");
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-const uri = `mongodb+srv://Tyree:${process.env.MONGODB_PASSWORD}@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://Tyree:@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority`;
 var bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+
+const SALT_ROUNDS = 10;
 
 function genKey(length=6){
     //this function returns a random string of length 6
@@ -22,12 +27,18 @@ app.use(function(req, res, next) {
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/signup', (req, res) =>{
+app.post('/signup', async (req, res) =>{
     //When the non-TU professor user signs up, they will only give their username and passwords
     //The rest of the fields will be empty by default
     const userEmail = req.body.email;
-    const userPassword = req.body.password;
+    let userPassword = req.body.password;
     const newUsername = userEmail.substring(0, userEmail.indexOf("@"));
+    try {
+        const hashedPassword = await bcrypt.hash(userPassword, SALT_ROUNDS);        
+        userPassword = hashedPassword;
+    } catch (e) {
+        console.log("Error occured while hashing password and storing the password ", e);
+    }
     const user = {
         username: newUsername,
         email: userEmail,
@@ -51,7 +62,7 @@ app.post('/signup', (req, res) =>{
         })
         db.close();
     });
-    res.status(200).send("Success");
+    res.status(200).send(user);
 });
 
 app.post('/signup-prof', (req, res) =>{
@@ -128,13 +139,14 @@ app.post('/signup-prof', (req, res) =>{
 });
 
 
-app.get("/signin", (req, res) => {
+app.post("/signin", async (req, res) => {
     //This function performs the necessary actions for 
     //signing in a user
    const { email, password } = req.body;
    const userEmail = email;
    const userPassword = password;
-   const query = { email: userEmail, password: userPassword };
+   const query = { email: userEmail };
+   var foundUser;
    MongoClient.connect(uri, (err, db) => {
         if (err){
             res.status(500).send("Cannot connect to database");
@@ -143,13 +155,23 @@ app.get("/signin", (req, res) => {
         var dbo = db.db("COSC484Users");
         dbo.collection("Users").find(query).toArray((err, result) => {
             if (err){
-                res.status(404).send("Could not find user");
+                res.status(400).send("Could use find user function");
             }
             console.log(result);
             arraySize = result.length;
             db.close();
             if (arraySize != 0){
-                res.status(200).send("Found user");
+                try {
+                   if (bcrypt.compare(userPassword, result[0].password)){
+                       foundUser = result[0];
+                       return res.status(200).send(foundUser);
+                       
+                   } else {
+                       res.status(404).send("Invalid credentials");
+                   }
+                }catch (e) {
+                    console.log("An error occured while comparing password", e);
+                }
             }else {
                 res.status(404).send("Could not find user");
             }
