@@ -1,8 +1,9 @@
+require('dotenv').config();
 var express = require("express");
 var app = express();
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-const uri = `mongodb+srv://Tyree:@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0-zg5f7.mongodb.net/test?retryWrites=true&w=majority`;
 var bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken');
@@ -41,13 +42,15 @@ app.post('/signup', async (req, res) =>{
     }
     const user = {
         username: newUsername,
+        role: 0,
         email: userEmail,
         password: userPassword,
         SignallingChannel: "",
         CurrentStreamDescription: "",
         CurrentStreamTitle: "",
         CurrentStreamKey: "",
-        PrevWatchedKeys: ""
+        PrevWatchedKeys: "",
+        refreshToken:""
     };
     MongoClient.connect(uri, (err, db) => {
         var dbo = db.db("COSC484Users");
@@ -65,21 +68,29 @@ app.post('/signup', async (req, res) =>{
     res.status(200).send(user);
 });
 
-app.post('/signup-prof', (req, res) =>{
+app.post('/signup-prof', async (req, res) =>{
     //When the TU professor signs up, they will only give their username and passwords
     //The rest of the fields will be empty by default
     const userEmail = req.body.email;
     const userPassword = req.body.password;
     const newUsername = userEmail.substring(0, userEmail.indexOf("@"));
+    try {
+        const hashedPassword = await bcrypt.hash(userPassword, SALT_ROUNDS);        
+        userPassword = hashedPassword;
+    } catch (e) {
+        console.log("Error occured while hashing password and storing the password ", e);
+    }
     const user = {
         username: newUsername,
+        role: 1,
         email: userEmail,
         password: userPassword,
         SignallingChannel: "",
         CurrentStreamDescription: "",
         CurrentStreamTitle: "",
         CurrentStreamKey: "",
-        PrevWatchedKeys: ""
+        PrevWatchedKeys: "",
+        refreshToken: ""
     };
     MongoClient.connect(uri, (err, db) => {
         if (err){
@@ -155,7 +166,7 @@ app.post("/signin", async (req, res) => {
         var dbo = db.db("COSC484Users");
         dbo.collection("Users").find(query).toArray((err, result) => {
             if (err){
-                res.status(400).send("Could use find user function");
+                return err;
             }
             console.log(result);
             arraySize = result.length;
@@ -163,9 +174,11 @@ app.post("/signin", async (req, res) => {
             if (arraySize != 0){
                 try {
                    if (bcrypt.compare(userPassword, result[0].password)){
-                       foundUser = result[0];
-                       return res.status(200).send(foundUser);
-                       
+                        const user = { username: result[0].username}
+                        const accessToken = generateAccessToken(user);
+                        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN);
+                        updateRefreshToken({email: result[0].email}, refreshToken);
+                        return res.status(200).send({accessToken: accessToken, refreshToken: refreshToken})
                    } else {
                        res.status(404).send("Invalid credentials");
                    }
@@ -177,6 +190,51 @@ app.post("/signin", async (req, res) => {
             }
         })
    })
+})
+
+app.delete('/signout', (req, res) => {
+    MongoClient.connect(uri, (err, db) => {
+        if(err){
+            console.err("Cannot connect to the database");
+            return res.status(500).send("Cannot connect to the database");
+        }
+        var dbo = db.db("COSC484Users");
+        dbo.collection("Users").updateOne({refreshToken: req.body.token}, { $set: {refreshToken: ""}}, (err, result) => {
+            if(err) throw err;
+            console.log("deleted token")
+            return res.status(200).send(result.username)
+        })
+    });
+});
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(token == null) return res.status(401).send("No token");
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if(err){
+            return res.status(403).send("Could not verify token")
+        }
+        req.user = user;
+        next();
+    })
+}
+
+app.post('/token', (req, res) => {
+    //This function gets the refresh token that is stored in the database
+    //This will allow us to create a new access token
+    MongoClient.connect(uri, (err, db) => {
+        if(err){
+            return res.status(500).send("Could not connect to database")
+        }
+        var dbo = db.db("COSC484Users");
+        dbo.collection("Users").findOne({email: req.body.email}, (err, result) => {
+            if(!result.refreshToken) return res.status(403).send("No token available");
+            if(err) return res.status(403).send("Could not find token");
+            res.status(200).send({refreshToken: result.refreshToken})
+            db.close();
+        })
+    })
 })
 
 app.get("/get-channel-name", (req, res) => {
@@ -206,6 +264,10 @@ app.get("/get-channel-name", (req, res) => {
     }); 
 });
 
+app.get('/testSignin', authenticateToken, (req, res) => {
+    res.status(200).send(req.user)
+})
+
 app.post("/send-keys", (req, res) => {
     //This function will send keys to the the tutors viewers
     const randomKey = genKey();
@@ -232,7 +294,7 @@ app.post("/send-keys", (req, res) => {
             secure: true,
             auth: {
                 user: 'tuconnected@gmail.com',
-                pass: 'TUConnect1!'
+                pass: process.env.EMAIL_PASSWORD
             }
         })
         for( let i = 0; i < mailingList.length; i++){
@@ -276,6 +338,25 @@ app.get("/watched_streams", (req, res) => {
         })
     })
 })
+
+function updateRefreshToken(user, token){
+    MongoClient.connect(uri, (err, db) => {
+        if(err){
+            console.err("Could not connect to database")
+            return res.status(500).send("Cannot connect to database");
+        };
+        var dbo = db.db("COSC484Users");
+        dbo.collection("Users").updateOne(user, { $set: {refreshToken: token}}, (err, result) => {
+            if(err) throw err;
+            console.log("Updated");
+            db.close();
+        })
+    })
+}
+
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: '30s'});
+}
 
 
 app.listen(3001, () => {
