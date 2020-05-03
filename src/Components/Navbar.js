@@ -1,17 +1,22 @@
-import React, { Component} from 'react'
+import React, { Component, useContext} from 'react'
 import {Link} from "react-router-dom" 
 import SignedOutLinks from '../navigation/SignedOutLinks'
 import SignedInLinks from '../navigation/SignedInLinks'
 import { isLogin } from '../navigation/utils/index.js';
-import ReactDOM from 'react-dom'
+import { JWTContext } from '../JWTContext'
 
-const Navbar = () => {
-      // need to work on authentication, ran into some bugs with the private route
-      return(
+function Navbar () {
+      const { setJWT , jwt} = useContext(JWTContext);
 
-              <SignedOutLinks></SignedOutLinks>
+            // need to work on authentication, ran into some bugs with the private route
+            return(
+                  <div>
+                        <h1>{jwt}</h1>
+                        <SignedOutLinks></SignedOutLinks>
+                  </div>
             //  <SignedInLinks/>
-      )
+         )
+      
 }
 
  export default Navbar;
