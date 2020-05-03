@@ -1,24 +1,33 @@
-import React  from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useContext }  from 'react';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 import { isLogin } from './utils/index.js';
+import { JWTContext } from '../JWTContext'
 
 
-// Having issues with this private route, needs fixing
+//This seems to only work with local storage, need to figure out a 
+//fix for contextAPI
+
 const PrivateRoute = ({component: Component, ...rest}) => {
+    const {jwt} = useContext(JWTContext)
     return (
-
-        // Show the component only when the user is logged in
-        // Otherwise, redirect the user to /login page
-        <Route {...rest} render={props => (
-            isLogin() ?
-             <Component {...props} />
-                 : <Redirect to = '/login' />  
-
-        )} />
-    );
+        <Route 
+            {...rest} 
+            render={props => 
+                {
+                    if(localStorage.getItem('JWT') == null){
+                        //was previously if(jwt === '') to check if there was a jwt token present
+                        return(
+                        <Redirect to='/login'/>
+                        )
+                    }
+                    return(  
+                       <Component {...props}/>
+                    );
+                }
+            }
+        />
+    )
 };
-{/* <Component {...props} />
-: <Redirect to = '/login' />  */}
 
 export default PrivateRoute;
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useContext, useState, useMemo} from 'react';
 import Navbar from './Components/Navbar.js' 
 import { BrowserRouter, Route, Router, Redirect} from 'react-router-dom';
 import Home from './Components/Home'
@@ -9,34 +9,27 @@ import Algebra from './Components/Algebra'
 import Calculus from './Components/Calculus'
 import Services from './Components/Services'
 import PublicRoute from './navigation/PublicRoute'
-import PrivateRoute from './navigation/PrivateRoute'
 import Subjects from './Components/Subjects'
+import  PrivateRoute  from './navigation/PrivateRoute'
+//import {UserContext} from './UserContext'
+import { JWTContextProvider } from './JWTContext'
 
-class App extends Component {
- 
-  render() {
-  
-    return ( 
-      <>
-        <BrowserRouter>
+function App() {
+  return ( 
+    <BrowserRouter>
+      <JWTContextProvider>
         <Navbar></Navbar>
-        <PublicRoute path = {"/home"} component={Home}/>
-        <PublicRoute path = {"/about"} component={About}/>
-        <PublicRoute path = {"/subjects"} component={Subjects}/>
-        <PublicRoute path = {"/calculus"} component={Calculus}/>
-        <PublicRoute path = {"/physics"} component={Physics}/>
-        <PublicRoute path = {"/algebra"} component={Algebra}/>
-        <PublicRoute path = {"/services"} component={Services}/>
-        <PublicRoute path = {"/login"} component={Login}/>
-
-        </BrowserRouter>
-            
-      </>
-    
-  
-    );
-
-  }
+        <PrivateRoute exact path = "/about" component={About}/>
+        <PrivateRoute exact path = "/home" component={Home}/>
+        <PrivateRoute exact path = "/subjects" component={Subjects}/>
+        <PrivateRoute exact path = "/calculus" component={Calculus}/>
+        <PrivateRoute exact path = "/physics" component={Physics}/>
+        <PrivateRoute exact path = "/algebra" component={Algebra}/>
+        <PrivateRoute exact path = "/services" component={Services}/>
+        <PublicRoute path = "/login" component={Login}/>
+      </JWTContextProvider>
+    </BrowserRouter>     
+  )
 }
 
 export default App;
