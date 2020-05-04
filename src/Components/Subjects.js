@@ -18,7 +18,7 @@ const Subjects = () => {
                                 <i class="material-icons large yellow-text text-darken-1">
                                     book
                                 </i>
-                                <a href="/calculus"class="btn indigo waves-effect waves-light">Go</a>
+                            
                                 <p class = "white-text">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                             Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
@@ -33,7 +33,7 @@ const Subjects = () => {
                                 <i class="material-icons large yellow-text text-darken-1">
                                     book
                                 </i>
-                                <a href="/algebra"class="btn indigo waves-effect waves-light">Go</a>
+                               
                                     <p class = "white-text">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                         Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
@@ -49,7 +49,7 @@ const Subjects = () => {
                                 <i class="material-icons large yellow-text text-darken-1">
                                     book
                                 </i>
-                                <a href="/physics"class="btn indigo waves-effect waves-light">Go</a>
+                            
                                 <p class = "white-text">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                             Sapiente, voluptatum aliquam quisquam hic explicabo a placeat recusandae enim
@@ -59,6 +59,10 @@ const Subjects = () => {
                         </div>
                     </div>
                 </div>
+        
+            </div>
+            <div className = "container no-color">
+              <a href="/stream"class="btn indigo waves-effect waves-light">Join Stream</a>
             </div>
         </div>
     )
