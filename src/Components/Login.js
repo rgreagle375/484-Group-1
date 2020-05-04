@@ -1,5 +1,5 @@
 import React, { useState, useContext, Component } from 'react';
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect, useHistory, withRouter } from 'react-router-dom'
 import '../layout/Login.css'
 import axios from 'axios'
 import { JWTContext } from '../JWTContext'
@@ -16,7 +16,7 @@ function Login (){
                 email: email,
                 password: password
             }).then((res) => {
-                if(res.status == 200){
+                if(res.status === 200){
                     console.log("Signed in successfully")
                     localStorage.setItem("JWT", JSON.stringify(res.data));
                     history.push('/about')
@@ -48,5 +48,5 @@ function Login (){
         )
 }
 
-export default Login;
+export default withRouter(Login);
 

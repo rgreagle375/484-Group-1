@@ -11,7 +11,6 @@ function Navbar () {
             // need to work on authentication, ran into some bugs with the private route
             return(
                   <div>
-                        <h1>{jwt}</h1>
                         <SignedOutLinks></SignedOutLinks>
                   </div>
             //  <SignedInLinks/>
