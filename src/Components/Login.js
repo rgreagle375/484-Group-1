@@ -1,13 +1,11 @@
-import React, { useState, useContext, Component } from 'react';
-import { Redirect, useHistory, withRouter } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useHistory, withRouter } from 'react-router-dom'
 import '../layout/Login.css'
 import axios from 'axios'
-import { JWTContext } from '../JWTContext'
 
 function Login (){
         const [email, setEmail] = useState('')
         const [password, setPassword] = useState('');
-        const { setJWT, jwt, updateJWT} = useContext(JWTContext);
         
         const history = useHistory();
 

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import startMaster from './Master_Logic'
+import startMaster from '../StreamLogic/Master_Logic'
 export default class Master extends Component {
     constructor(props) {
       super(props);
       this.videoTag = React.createRef()
     }
+
+    // ADD START STREAM FORM IN THIS FILE
 
     componentDidMount() {
         startMaster(this.videoTag, 
@@ -43,7 +45,6 @@ export default class Master extends Component {
             controls
             muted
         />
-        <button>Start Master</button>
         </div>
         )
         

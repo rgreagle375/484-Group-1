@@ -1,9 +1,11 @@
 import React from 'react';
-
+import Viewer from './Viewer_Stream'
+//INSERT INFORMATION TO ACCESS STREAM HERE  
 const Algebra = () => {
+    const channelName = ""
     return (
         <div>
-            <h1 className = "white-text">Algebra</h1>
+            <Viewer channelName={ channelName } />
         </div>
     );
 }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import startViewer from './Viewer_Logic';
+import startViewer from '../StreamLogic/Viewer_Logic';
 export default class Viewer extends Component {
     constructor(props){
         super(props);
         this.videoTag = React.createRef();
     }
-    componentWillMount() {
+    componentDidMount() {
         
         setTimeout(() => {
             startViewer(this.videoTag, 

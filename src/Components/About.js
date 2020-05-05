@@ -1,6 +1,5 @@
 import React from 'react'
 import '../layout/Dashboard.css'
-import Slider from './Slider'
 const About = () =>{
 
     return(

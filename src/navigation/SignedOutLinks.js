@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Signout } from '../Components/Signout'
+import React  from 'react'
+import {a} from "react-router-dom" 
+
+
 const SignedOutLinks = () => {
     return (
             <nav className="nav-wrapper yellow darken-1 z-depth-3">
@@ -24,14 +25,7 @@ const SignedOutLinks = () => {
                         <li><a href="/about" id = "About" className = "black-text">About</a></li>
                         <li><a href="/services" id = "Services"class = "black-text">Services</a></li>
                         <li><a href="/subjects"id = "Subjects" className = "black-text">Subjects</a></li>
-                        {
-                            localStorage.getItem("JWT") 
-                             ?
-                             <li><Signout /></li> 
-                             : 
-                             <li><a href="/login" className = "black-text">Login</a></li> 
-                             
-                        }
+                        <li><a href="/login" className = "black-text">Login</a></li> 
             
                         <li><a href="" className="black-text"><i className="material-icons black-text right"> person</i></a></li>
                     </ul>
@@ -40,4 +34,4 @@ const SignedOutLinks = () => {
     )
 }
 
- export default SignedOutLinks
+ export default SignedOutLinks;
