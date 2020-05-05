@@ -6,7 +6,6 @@ export default class Viewer extends Component {
         this.videoTag = React.createRef();
     }
     componentDidMount() {
-        
         setTimeout(() => {
             startViewer(this.videoTag, 
                 {
