@@ -12,10 +12,58 @@ const bcrypt = require('bcrypt');
 
 const SALT_ROUNDS = 10;
 
+//================================= MISCELLANEOUS FUNCTIONS ====================================
 function genKey(length=6){
     //this function returns a random string of length 6
     //and contains a mix of letters and numbers
     return Math.random.toString(20).substr(2, length);
+}
+
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: '30s'});
+}
+
+function updateRefreshToken(user, token){
+    MongoClient.connect(uri, (err, db) => {
+        if(err){
+            console.err("Could not connect to database")
+            return res.status(500).send("Cannot connect to database");
+        };
+        var dbo = db.db("COSC484Users");
+        dbo.collection("Users").updateOne(user, { $set: {refreshToken: token}}, (err, result) => {
+            if(err) throw err;
+            console.log("Updated");
+            db.close();
+        })
+    })
+}
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(token == null) return res.status(401).send("No token");
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if(err){
+            return res.status(403).send("Could not verify token")
+        }
+        req.user = user;
+        next();
+    })
+}
+
+function updateRefreshToken(user, token){
+    MongoClient.connect(uri, (err, db) => {
+        if(err){
+            console.err("Could not connect to database")
+            return res.status(500).send("Cannot connect to database");
+        };
+        var dbo = db.db("COSC484Users");
+        dbo.collection("Users").updateOne(user, { $set: {refreshToken: token}}, (err, result) => {
+            if(err) throw err;
+            console.log("Updated");
+            db.close();
+        })
+    })
 }
 
 app.use(function(req, res, next) {
@@ -27,6 +75,8 @@ app.use(function(req, res, next) {
 
 app.use(cors());
 app.use(bodyParser.json());
+
+//================================= USER AUTHENTICATION/DEAUTHENTICATION ====================================
 
 app.post('/signup', async (req, res) =>{
     //When the non-TU professor user signs up, they will only give their username and passwords
@@ -207,18 +257,7 @@ app.delete('/signout', (req, res) => {
     });
 });
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if(token == null) return res.status(401).send("No token");
-    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
-        if(err){
-            return res.status(403).send("Could not verify token")
-        }
-        req.user = user;
-        next();
-    })
-}
+//================================= TOKENS ====================================
 
 app.post('/token', (req, res) => {
     //This function gets the refresh token that is stored in the database
@@ -236,6 +275,12 @@ app.post('/token', (req, res) => {
         })
     })
 })
+
+app.get('/TokenAuth', authenticateToken, (req, res) => {
+    res.status(200).send(req.user)
+})
+
+//================================= STREAM RELATED INFORMATION ====================================
 
 app.get("/get-channel-name", (req, res) => {
     //This function will get the stream if the key is correct
@@ -264,9 +309,6 @@ app.get("/get-channel-name", (req, res) => {
     }); 
 });
 
-app.get('/testSignin', authenticateToken, (req, res) => {
-    res.status(200).send(req.user)
-})
 
 app.post("/send-keys", (req, res) => {
     //This function will send keys to the the tutors viewers
@@ -338,26 +380,6 @@ app.get("/watched_streams", (req, res) => {
         })
     })
 })
-
-function updateRefreshToken(user, token){
-    MongoClient.connect(uri, (err, db) => {
-        if(err){
-            console.err("Could not connect to database")
-            return res.status(500).send("Cannot connect to database");
-        };
-        var dbo = db.db("COSC484Users");
-        dbo.collection("Users").updateOne(user, { $set: {refreshToken: token}}, (err, result) => {
-            if(err) throw err;
-            console.log("Updated");
-            db.close();
-        })
-    })
-}
-
-function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: '30s'});
-}
-
 
 app.listen(3001, () => {
     console.log("Server running on port 3001");
