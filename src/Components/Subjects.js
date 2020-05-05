@@ -59,6 +59,7 @@ const Subjects = () => {
                         </div>
                     </div>
                 </div>
+                <a href="#"class="btn indigo waves-effect waves-light">Start Stream</a>
             </div>
         </div>
     )
