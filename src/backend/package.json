@@ -11,7 +11,7 @@
   "author": "Group One",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.659.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
